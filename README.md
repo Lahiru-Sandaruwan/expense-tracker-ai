@@ -1,3 +1,55 @@
+# How I Built an AI-Powered Expense Tracker with Spring Boot and OpenAI
+
+Managing expenses is a daily need — so I built a smart tracker that doesn’t just store your expenses, but uses **OpenAI’s GPT** to **categorize them intelligently**.
+
+In this blog, I’ll walk you through how I used **Java 17**, **Spring Boot**, and the **OpenAI API** to build a backend system that automatically organizes your spending by categories like Food, Transport, Health, etc.
+
+The best part? It only cost a few cents thanks to GPT-3.5's affordable API.
+## Tech Stack
+
+- **Java 17**
+- **Spring Boot 3**
+- **Spring Security + JWT** for authentication
+- **MongoDB** for database
+- **OpenAI GPT-3.5 API** for categorization
+- **Lombok** to reduce boilerplate
+- **Swagger** for testing APIs
+## Why I Chose MongoDB
+
+Instead of using a traditional SQL database like MySQL, I decided to use **MongoDB** because of its flexible schema, native JSON format, and excellent support through Spring Boot's `spring-data-mongodb`.
+
+This made it easier to work with dynamic data like user-generated expense descriptions and future-proofed the app for scaling.
+## Using OpenAI GPT-3.5 for Categorization
+
+The core feature of this app is AI-powered categorization. I used OpenAI’s GPT-3.5 Turbo API to process natural language expense descriptions like "Uber to Colombo" or "Dinner at Pizza Hut" and classify them into categories like Transport or Food.
+
+I used OkHttp to send a request to the API with the expense description and parsed the JSON response to extract the category.
+## Expense Service: Save + Categorize Automatically
+
+In the service layer, before saving an expense to MongoDB, I check if the category is missing. If so, I call the OpenAI API to generate a category based on the description. This allows users to simply type something like "Bought mangoes" or "Pizza at Domino’s" and let the app auto-classify it.
+
+The expense is saved with a timestamp and can be retrieved later using the user ID.
+## 🔐 Implementing JWT Authentication with Spring Security
+
+To keep our app secure, we use JWT (JSON Web Token) based authentication. Here’s how we broke it down:
+
+- Created a `User` model stored in MongoDB.
+- Integrated Spring Security and JWT with a utility to generate and validate tokens.
+- Used BCrypt hashing to securely store user passwords.
+- Setup a `UserRepository` and `PasswordEncoder` bean for our service layer.
+
+This gives our app secure login, token-based API access, and password protection — without needing external auth services.
+## 🔐 Securing APIs with JWT + Spring Security
+
+We used Spring Security + JWT to secure our endpoints. Here’s what we did:
+
+- Built a custom `SecurityConfig` with a JWT filter.
+- Added user registration & login endpoints via `AuthController`.
+- On registration/login, users receive a JWT token.
+- Protected other routes so only authenticated users can access them using the `Authorization: Bearer <token>` header.
+
+Now, only valid users can access their own smart expense data.
+
 
 ---
 
