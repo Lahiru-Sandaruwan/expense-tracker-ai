@@ -1,0 +1,25 @@
+server:
+  port: 8082
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/expense_tracker
+      # If using MongoDB Atlas, replace above line with:
+      # uri: mongodb+srv://<username>:<password>@cluster0.mongodb.net/expense_tracker?retryWrites=true&w=majority
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+openai:
+  api-key: REPLACE ACTUAL API KEY
+  model: gpt-3.5-turbo
+  url: https://api.openai.com/v1/chat/completions
+
+logging:
+  level:
+    root: INFO
+    org.springframework.data.mongodb.core: DEBUG
